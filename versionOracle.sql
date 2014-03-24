@@ -57,8 +57,8 @@ CREATE TABLE Relation (
 	typeRelation VARCHAR2(255),
 	contexteRelation VARCHAR2(255),
 	PRIMARY KEY (emetteur, recepteur),
-	CONSTRAINT typeRelation CHECK (typeRelation IN ('Connaissance', 'Amitie', 'Mariage', 'Divorce', 'Adultere', 'Ennemi')),
-	CONSTRAINT contexteRelation CHECK (contexteRelation IN ('Travail', 'Famille', 'Etude', 'Internet', 'Logement')),
+	--CONSTRAINT typeRelation CHECK (typeRelation IN ('Connaissance', 'Amitie', 'Mariage', 'Divorce', 'Adultere', 'Ennemi')),
+	--CONSTRAINT contexteRelation CHECK (contexteRelation IN ('Travail', 'Famille', 'Etude', 'Internet', 'Logement')),
 	FOREIGN KEY (emetteur) REFERENCES Personne(idPersonne),
 	FOREIGN KEY (recepteur) REFERENCES Personne(idPersonne)
 );
@@ -88,7 +88,7 @@ CREATE TABLE Telephone (
 	codePin NUMBER,
 	proprietaireTelephone NUMBER,
 	fournisseurTelephone VARCHAR2(255),
-	CONSTRAINT fournisseurTelephone CHECK (fournisseurTelephone IN ('SFR', 'Free', 'Orange', 'Bouygues')),
+	CONSTRAINT fournisseurTelephone CHECK (fournisseurTelephone IN ('SFR', 'Free', 'Orange', 'Bouygues', 'Numericable')),
 	FOREIGN KEY (proprietaireTelephone) REFERENCES Personne(idPersonne)
 );
 

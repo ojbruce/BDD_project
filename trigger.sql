@@ -1,4 +1,5 @@
-EXEC dbms_output.enable(1000000); /* <-- marche pas top top */
+--EXEC dbms_output.enable(1000000); /* <-- marche pas top top */
+SET SERVEROUTPUT ON;
 
 /* Pretty pretty useless */
 CREATE OR REPLACE TRIGGER cookie
@@ -22,3 +23,65 @@ BEGIN
 END;
 /
 
+
+
+/** Trigger Mail **/
+
+CREATE TRIGGER mail_free_ajout
+INSTEAD OF insert ON mail_free_view
+FOR EACH ROW
+BEGIN
+	INSERT INTO Mail VALUES (:new.adresseMail, :new.mdpMail, :new.proprietaireMail, 'Free');
+END;
+/
+
+CREATE TRIGGER mail_orange_ajout
+INSTEAD OF insert ON mail_orange_view
+FOR EACH ROW
+BEGIN
+	INSERT INTO Mail VALUES (:new.adresseMail, :new.mdpMail, :new.proprietaireMail, 'Orange');
+END;
+/
+
+CREATE TRIGGER mail_laposte_ajout
+INSTEAD OF insert ON mail_laposte_view
+FOR EACH ROW
+BEGIN
+	INSERT INTO Mail VALUES (:new.adresseMail, :new.mdpMail, :new.proprietaireMail, 'Laposte');
+END;
+/
+
+
+/** Trigger Telephone **/
+
+CREATE TRIGGER telephone_sfr_ajout
+INSTEAD OF insert ON telephone_sfr_view
+FOR EACH ROW
+BEGIN
+	INSERT INTO Telephone VALUES (:new.numTelephone, :new.codePin, :new.proprietaireTelephone, 'SFR');
+END;
+/
+
+CREATE TRIGGER telephone_free_ajout
+INSTEAD OF insert ON telephone_free_view
+FOR EACH ROW
+BEGIN
+	INSERT INTO Telephone VALUES (:new.numTelephone, :new.codePin, :new.proprietaireTelephone, 'Free');
+END;
+/
+
+CREATE TRIGGER telephone_orange_ajout
+INSTEAD OF insert ON telephone_orange_view
+FOR EACH ROW
+BEGIN
+	INSERT INTO Telephone VALUES (:new.numTelephone, :new.codePin, :new.proprietaireTelephone, 'Orange');
+END;
+/
+
+CREATE TRIGGER telephone_bouygues_ajout
+INSTEAD OF insert ON telephone_bouygues_view
+FOR EACH ROW
+BEGIN
+	INSERT INTO Telephone VALUES (:new.numTelephone, :new.codePin, :new.proprietaireTelephone, 'Bouygues');
+END;
+/

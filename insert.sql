@@ -6,17 +6,17 @@ INSERT INTO Personne VALUES (3, 'Jospin', 'Paul', 'Homme', '9-DEC-1992', '6 rue 
 
 /* Prioritaire */
 INSERT INTO Personne VALUES (4, 'Alexander', 'Keith', 'Homme', '2-DEC-1951', '33 Federal Street New York', 'A des lunettes');
-INSERT INTO Entreprise VALUES (0, 'NSA', '?');
+INSERT INTO Entreprise VALUES (0, 'NSA', 'Organisation gouvernementale');
 INSERT INTO Employe VALUES (4, 0, 'Directeur');
 
-INSERT INTO Personne VALUES (5, 'Merkel', 'Angela', 'Femme', '17-JUI-1954', '156 ?' , '');
+INSERT INTO Personne VALUES (5, 'Merkel', 'Angela', 'Femme', '17-JUL-1954', '27 rue Meldermann' , '');
 INSERT INTO Prioritaire VALUES (5, 'Chancelier Federal Allemand');
 
 INSERT INTO Personne VALUES (6, 'Dupond', 'Mohamed', 'Homme', '23-NOV-1985', '76 rue des ananas', 'Louche');
 INSERT INTO Prioritaire VALUES (6, 'Terroriste');
 
 INSERT INTO Entreprise VALUES (1, 'ColoriFleur', '?');
-INSERT INTO Employe VALUES (0, 1, 'Chef d\'équipe');
+INSERT INTO Employe VALUES (0, 1, 'Chef d equipe');
 INSERT INTO Employe VALUES(6, 1, 'Livreur');
 
 INSERT INTO Relation VALUES (0, 6, 'Amitie', 'Travail');
