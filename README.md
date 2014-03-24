@@ -12,7 +12,6 @@ About NSA.
 Connect to ssh:
 
 ```$ ssh -f -N -L:9418:github.com:9418 <e+n°etu>@bastion.etu.univ-nantes.fr```
-
 ```$ cd <wanted-repository>```
 
 Clone:
@@ -28,4 +27,4 @@ Deco bastion
 ```$kill -9 <processus ssh>```
 
 
-#Author: ojbruce, cowa and ...
+#Author: ojbruce, cowa and Matthieu-Riou
