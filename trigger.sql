@@ -1,6 +1,6 @@
 SET SERVEROUTPUT ON;
 
-/* Pretty pretty useless */
+/* Easter egg */
 CREATE OR REPLACE TRIGGER cookie
 AFTER INSERT OR UPDATE ON Personne
 FOR EACH ROW
