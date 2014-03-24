@@ -7,9 +7,14 @@
  * @author : Brice Thomas
  */
 
+--Pour permettre l'affichage dans la console
 SET SERVEROUTPUT ON;
 
-/* Easter egg */
+/**
+ * Easter Egg 
+ * Trigger qui se déclenche lorsqu'une personne est ajouté dont le prénom est Cookie
+ * Un trigger simple.
+ */
 CREATE OR REPLACE TRIGGER cookie
 AFTER INSERT OR UPDATE ON Personne
 FOR EACH ROW
@@ -20,7 +25,10 @@ BEGIN
 END;
 /
 
-/* Envoie un mail lorsqu'un nouveau terroriste est détecté */
+/**
+ * Trigger de detection de terroriste.
+ * "Envoie" un mail lorsque l'ajout d'un  nouveau terroriste est détecté.
+ */
 CREATE OR REPLACE TRIGGER terroriste
 AFTER INSERT OR UPDATE ON Prioritaire
 FOR EACH ROW
@@ -35,6 +43,13 @@ END;
 
 /** Trigger Mail **/
 
+/**
+ * Trigger : mail_<fai>_ajout
+ * Triggers qui lorsque l'on fait des ajouts dans une vue ajoute dans la table Mail 
+ * Chacun font reference a des fai differents.
+ * 
+ */
+--Free
 CREATE TRIGGER mail_free_ajout
 INSTEAD OF insert ON mail_free_view
 FOR EACH ROW
@@ -43,6 +58,7 @@ BEGIN
 END;
 /
 
+--Orange
 CREATE TRIGGER mail_orange_ajout
 INSTEAD OF insert ON mail_orange_view
 FOR EACH ROW
@@ -51,6 +67,7 @@ BEGIN
 END;
 /
 
+--laposte
 CREATE TRIGGER mail_laposte_ajout
 INSTEAD OF insert ON mail_laposte_view
 FOR EACH ROW
@@ -61,7 +78,14 @@ END;
 
 
 /** Trigger Telephone **/
+/**
+ * Trigger : telephone_<fai>_ajout
+ * Triggers qui lorsque l'on fait des ajouts dans une vue de type fai_telephone ajoute dans la table telephone 
+ * Chacun font reference a des fai differents.
+ * 
+ */
 
+--SFR
 CREATE TRIGGER telephone_sfr_ajout
 INSTEAD OF insert ON telephone_sfr_view
 FOR EACH ROW
@@ -70,6 +94,7 @@ BEGIN
 END;
 /
 
+--FREE
 CREATE TRIGGER telephone_free_ajout
 INSTEAD OF insert ON telephone_free_view
 FOR EACH ROW
@@ -78,6 +103,7 @@ BEGIN
 END;
 /
 
+--Orange
 CREATE TRIGGER telephone_orange_ajout
 INSTEAD OF insert ON telephone_orange_view
 FOR EACH ROW
@@ -86,6 +112,7 @@ BEGIN
 END;
 /
 
+--Bouygues
 CREATE TRIGGER telephone_bouygues_ajout
 INSTEAD OF insert ON telephone_bouygues_view
 FOR EACH ROW
@@ -94,6 +121,7 @@ BEGIN
 END;
 /
 
+--Numericable
 CREATE TRIGGER telephone_numericable_ajout
 INSTEAD OF insert ON telephone_numericable_view
 FOR EACH ROW

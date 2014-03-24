@@ -9,9 +9,9 @@
 
 
 /** 
- * Fonction update vente de sfr à numéricable 
+ * Fonction update vente de sfr à numéricable
+ * Actualité: sfr serait racheter par numericable 
  **/
-
 CREATE PROCEDURE update_vente_sfr
 IS
 BEGIN
