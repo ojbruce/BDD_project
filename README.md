@@ -28,4 +28,4 @@ Deco bastion
 ```$kill -9 <processus ssh>```
 
 
-#Author: ojbruce, cowa and ...
+#Author: ojbruce, cowa and Matthieu-Riou
