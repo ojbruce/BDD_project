@@ -33,14 +33,15 @@ INSERT INTO Mail VALUES ('bomberman@free.fr', 'alquaida', 6, 'Free');
 
 /* Telephone */
 INSERT INTO Telephone VALUES ('0658764323', '3945', 5, 'SFR');
-INSERT INTO Telephone VALUES ('0634216589', '0000', 2, 'Orange');
+/* essaie d'insertion dans la vue */
+INSERT INTO telephone_orange_view VALUES ('0634216589', '0000', 2);
 
 /* Compte Bancaire */
 INSERT INTO CompteBancaire VALUES ('FR7630046001290029721519546', '50000', '4598', 3);	
 INSERT INTO CompteBancaire VALUES ('AL7640046001290029721519546', '16250000', '9999', 5);	
 
 /* Conversation */
-INSERT INTO Conversation VALUES ( 0, '23-NOV-1985 23:25:11' , 'Appel secret', 'Hello cheri on se voit à la sortie', 0,1); 
-INSERT INTO Conversation VALUES ( 0, '20-APR-2001 15:45:31' , 'SMS', 'Avion en vue des tours', 6,4); 
+INSERT INTO Conversation VALUES ( 0, '23-NOV-1985' , 'Appel secret', 'Hello cheri on se voit à la sortie', 0,1); 
+INSERT INTO Conversation VALUES ( 1, '20-APR-2001' , 'SMS', 'Avion en vue des tours', 6,4); 
 
 
