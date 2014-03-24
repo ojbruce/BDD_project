@@ -7,8 +7,6 @@
  * @author : Brice Thomas
  */
 
-
-
 /* Personne */
 INSERT INTO Personne VALUES (0, 'Marley', 'Bob', 'Homme', '18-APR-1978', '12 rue des marguerites', 'Joli cheveux');
 INSERT INTO Personne VALUES (1, 'Little', 'Jamina', 'Femme', '21-JAN-1998', '12 rue des marguerites', 'Grande');
