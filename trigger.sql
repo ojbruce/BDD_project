@@ -85,3 +85,11 @@ BEGIN
 	INSERT INTO Telephone VALUES (:new.numTelephone, :new.codePin, :new.proprietaireTelephone, 'Bouygues');
 END;
 /
+
+CREATE TRIGGER telephone_numericable_ajout
+INSTEAD OF insert ON telephone_numericable_view
+FOR EACH ROW
+BEGIN
+	INSERT INTO Telephone VALUES (:new.numTelephone, :new.codePin, :new.proprietaireTelephone, 'Numericable');
+END;
+/

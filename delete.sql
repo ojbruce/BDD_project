@@ -8,6 +8,7 @@ DROP TRIGGER telephone_sfr_ajout;
 DROP TRIGGER telephone_free_ajout;
 DROP TRIGGER telephone_orange_ajout;
 DROP TRIGGER telephone_bouygues_ajout;
+DROP TRIGGER telephone_numericable_ajout;
 
 /* Suppression des Vues*/
 
@@ -20,10 +21,17 @@ DROP VIEW telephone_sfr_view;
 DROP VIEW telephone_free_view;
 DROP VIEW telephone_orange_view;
 DROP VIEW telephone_bouygues_view;
+DROP VIEW telephone_numericable_view;
 
 /* Suppression des Roles */
 DROP ROLE NSA;
 DROP ROLE FBI;
+DROP ROLE FREE;
+DROP ROLE ORANGE;
+DROP ROLE LAPOSTE;
+DROP ROLE SFR;
+DROP ROLE BOUYGUES;
+DROP ROLE NUMERICABLE;
 
 /* Suppression des Procedure */
 DROP PROCEDURE update_vente_sfr;

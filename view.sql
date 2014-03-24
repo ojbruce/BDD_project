@@ -35,3 +35,4 @@ CREATE VIEW telephone_orange_view AS SELECT numTelephone, codePin, proprietaireT
 
 CREATE VIEW telephone_bouygues_view AS SELECT numTelephone, codePin, proprietaireTelephone FROM Telephone WHERE fournisseurTelephone = 'Bouygues';
 
+CREATE VIEW telephone_numericable_view AS SELECT numTelephone, codePin, proprietaireTelephone FROM Telephone WHERE fournisseurTelephone = 'Numericable';
