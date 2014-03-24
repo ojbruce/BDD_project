@@ -7,25 +7,23 @@ BEGIN
 END;
 /
 
-/**CREATE TRIGGER limite_conv
-BEFORE INSERT ON Conversation
-FOR EACH ROW
+CREATE PROCEDURE entourage_bis (id number, id2 number, n number, diff number)
+IS
+	Cursor C1 IS SELECT * FROM Personne JOIN Relation ON emetteur = idPersonne WHERE emetteur != id2 and recepteur = id;
+	i C1%rowtype;
 BEGIN
-	SELECT count(*) as cpt FROM Conversation Join Prioritaire ON allocuteur1 = idPersonne;
-	IF cpt > 15 THEN
-		DELETE last_conv
+	IF(n > 0) THEN
+		FOR i in C1 LOOP
+			DBMS_OUTPUT.put_line(i.nom || ' ' || i.prenom || ' : ' || diff || ' degre d eloignement');
+			entourage_bis(i.idPersonne, id2, n-1, diff+1);
+		END LOOP;
 	END IF;
 END;
 /
 
-CREATE PROCEDURE entourage (n number, diff number)
+CREATE PROCEDURE entourage (id number, n number)
 IS
-	Cursor C1 = SELECT * FROM Personne;
-	i C1%rowtype;
 BEGIN
-	FOR i in C1 LOOP
-		affiche i.nom, diif
-		entourage(n-1, diff+1)
-	END LOOP;
+	entourage_bis(id, id, n, 1);
 END;
-/**/
+/

@@ -10,9 +10,6 @@ DROP TRIGGER telephone_orange_ajout;
 DROP TRIGGER telephone_bouygues_ajout;
 
 /* Suppression des Vues*/
-/*DROP VIEW justice_view;
-DROP VIEW police_view;
-DROP VIEW i_hack_you;*/
 
 DROP VIEW fbi_view;
 DROP VIEW i_hack_you_view;
@@ -30,6 +27,8 @@ DROP ROLE FBI;
 
 /* Suppression des Procedure */
 DROP PROCEDURE update_vente_sfr;
+DROP PROCEDURE entourage_bis;
+DROP PROCEDURE entourage;
 
 /* Suppression des tables de notre base de données */
 DROP TABLE Employe;

@@ -1,4 +1,3 @@
---EXEC dbms_output.enable(1000000); /* <-- marche pas top top */
 SET SERVEROUTPUT ON;
 
 /* Pretty pretty useless */
