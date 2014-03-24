@@ -1,11 +1,11 @@
 /**
-  * Vue pour la police
+  * Vue pour la fbi
   * Permet de trouver les terroristes
   */
 CREATE VIEW fbi_view AS 
 	SELECT * 
 	FROM  Personne Natural Join Prioritaire 
-	Where Prioritaire.statutPrioritaire='terroriste';
+	Where Prioritaire.statutPrioritaire='Terroriste';
 
 /**
   * Hackers are in your home 
