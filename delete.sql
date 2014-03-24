@@ -10,9 +10,6 @@ DROP TRIGGER telephone_orange_ajout;
 DROP TRIGGER telephone_bouygues_ajout;
 
 /* Suppression des Vues*/
-/*DROP VIEW justice_view;
-DROP VIEW police_view;
-DROP VIEW i_hack_you;*/
 
 DROP VIEW fbi_view;
 DROP VIEW i_hack_you_view;
