@@ -63,6 +63,11 @@ CREATE TABLE Relation (
 	FOREIGN KEY (recepteur) REFERENCES Personne(idPersonne)
 );
 
+/**
+ * La table des mails.
+ * Permet d'enregistrer les adresses mails de chaque personne.
+ * Reference à la table personne.
+ */
 CREATE TABLE Mail (
 	adresseMail VARCHAR2(255) PRIMARY KEY,
 	mdpMail VARCHAR2(255),
@@ -72,6 +77,12 @@ CREATE TABLE Mail (
 	FOREIGN KEY (proprietaireMail) REFERENCES Personne(idPersonne)
 );
 
+
+/**
+ * La table Telephone.
+ * Permet d'enregistrer les numeros de telephone de chaque personne.
+ * Reference à la table personne.
+ */
 CREATE TABLE Telephone (
 	numTelephone VARCHAR2(255) PRIMARY KEY,
 	codePin NUMBER,
@@ -81,6 +92,12 @@ CREATE TABLE Telephone (
 	FOREIGN KEY (proprietaireTelephone) REFERENCES Personne(idPersonne)
 );
 
+
+/**
+ * La table comptebancaire.
+ * Permet d'enregistrer les comptes banquaires de chaque personne.
+ * Reference à la table personne.
+ */
 CREATE TABLE CompteBancaire (
 	iban VARCHAR2(255) PRIMARY KEY,
 	solde NUMBER,
@@ -89,6 +106,11 @@ CREATE TABLE CompteBancaire (
 	FOREIGN KEY (proprietaireCompteBancaire) REFERENCES Personne(idPersonne)
 );
 
+/**
+ * La table conversation.
+ * Permet d'enregistrer les conversations entre deux personnes.
+ * Reference à la table personne.
+ */
 CREATE TABLE Conversation (
 	idConv NUMBER PRIMARY KEY,
 	dateHeureConv DATE,

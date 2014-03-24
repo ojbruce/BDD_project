@@ -2,9 +2,9 @@
 DROP TRIGGER Colocation;
 
 /* Suppression des Vues*/
-DROP VIEW justice_view;
+/*DROP VIEW justice_view;
 DROP VIEW police_view;
-DROP VIEW i_hack_you;
+DROP VIEW i_hack_you;*/
 
 DROP VIEW fbi_view;
 DROP VIEW i_hack_you_view;
