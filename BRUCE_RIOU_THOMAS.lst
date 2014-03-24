@@ -1,0 +1,835 @@
+SQL> 
+SQL> @delete.sql
+SQL> /* Suppression des Trigger */
+SQL> DROP TRIGGER cookie;
+
+Trigger dropped.
+
+SQL> DROP TRIGGER terroriste;
+
+Trigger dropped.
+
+SQL> DROP TRIGGER mail_free_ajout;
+
+Trigger dropped.
+
+SQL> DROP TRIGGER mail_orange_ajout;
+
+Trigger dropped.
+
+SQL> DROP TRIGGER mail_laposte_ajout;
+
+Trigger dropped.
+
+SQL> DROP TRIGGER telephone_sfr_ajout;
+
+Trigger dropped.
+
+SQL> DROP TRIGGER telephone_free_ajout;
+
+Trigger dropped.
+
+SQL> DROP TRIGGER telephone_orange_ajout;
+
+Trigger dropped.
+
+SQL> DROP TRIGGER telephone_bouygues_ajout;
+
+Trigger dropped.
+
+SQL> DROP TRIGGER telephone_numericable_ajout;
+
+Trigger dropped.
+
+SQL> 
+SQL> /* Suppression des Vues*/
+SQL> 
+SQL> DROP VIEW fbi_view;
+
+View dropped.
+
+SQL> DROP VIEW i_hack_you_view;
+
+View dropped.
+
+SQL> DROP VIEW mail_free_view;
+
+View dropped.
+
+SQL> DROP VIEW mail_orange_view;
+
+View dropped.
+
+SQL> DROP VIEW mail_laposte_view;
+
+View dropped.
+
+SQL> DROP VIEW telephone_sfr_view;
+
+View dropped.
+
+SQL> DROP VIEW telephone_free_view;
+
+View dropped.
+
+SQL> DROP VIEW telephone_orange_view;
+
+View dropped.
+
+SQL> DROP VIEW telephone_bouygues_view;
+
+View dropped.
+
+SQL> DROP VIEW telephone_numericable_view;
+
+View dropped.
+
+SQL> 
+SQL> /* Suppression des Roles */
+SQL> DROP ROLE NSA;
+
+Role dropped.
+
+SQL> DROP ROLE FBI;
+
+Role dropped.
+
+SQL> DROP ROLE FREE;
+
+Role dropped.
+
+SQL> DROP ROLE ORANGE;
+
+Role dropped.
+
+SQL> DROP ROLE LAPOSTE;
+
+Role dropped.
+
+SQL> DROP ROLE SFR;
+
+Role dropped.
+
+SQL> DROP ROLE BOUYGUES;
+
+Role dropped.
+
+SQL> DROP ROLE NUMERICABLE;
+
+Role dropped.
+
+SQL> 
+SQL> /* Suppression des Procedure */
+SQL> DROP PROCEDURE update_vente_sfr;
+
+Procedure dropped.
+
+SQL> DROP PROCEDURE entourage_bis;
+
+Procedure dropped.
+
+SQL> DROP PROCEDURE entourage;
+
+Procedure dropped.
+
+SQL> 
+SQL> /* Suppression des tables de notre base de données */
+SQL> DROP TABLE Employe;
+
+Table dropped.
+
+SQL> DROP TABLE Prioritaire;
+
+Table dropped.
+
+SQL> DROP TABLE Relation;
+
+Table dropped.
+
+SQL> DROP TABLE Mail;
+
+Table dropped.
+
+SQL> DROP TABLE Telephone;
+
+Table dropped.
+
+SQL> DROP TABLE CompteBancaire;
+
+Table dropped.
+
+SQL> DROP TABLE Conversation;
+
+Table dropped.
+
+SQL> DROP TABLE Personne;
+
+Table dropped.
+
+SQL> DROP TABLE Entreprise;
+
+Table dropped.
+
+SQL> 
+SQL> 
+SQL> @versionOracle.sql
+SQL> /**
+SQL>  * La table personne.
+SQL>  * Permet d'enregistrer des personnes.
+SQL>  */
+SQL> CREATE TABLE Personne (
+  2  	     idPersonne NUMBER PRIMARY KEY,
+  3  	     nom VARCHAR2(255),
+  4  	     prenom VARCHAR2(255),
+  5  	     sexe VARCHAR2(20),
+  6  	     dateNaissance DATE,
+  7  	     adressePrincipale VARCHAR2(255),
+  8  	     descriptionPhysique VARCHAR2(255),
+  9  	     CONSTRAINT sexe CHECK (sexe IN ('Homme', 'Femme'))
+ 10  );
+
+Table created.
+
+SQL> 
+SQL> /**
+SQL>  * La table entrerise.
+SQL>  * Permet d'enregistrer les entreprises.
+SQL>  */
+SQL> CREATE TABLE Entreprise (
+  2  	     idEntreprise NUMBER PRIMARY KEY,
+  3  	     nomEntreprise VARCHAR2(255),
+  4  	     statutEntreprise VARCHAR2(255)
+  5  );
+
+Table created.
+
+SQL> 
+SQL> /**
+SQL>  * La table employe.
+SQL>  * Permet d'enregistrer une personne employee dans une entreprises.
+SQL>  * Reference à la table entreprise et personne.
+SQL>  */
+SQL> CREATE TABLE Employe (
+  2  	     idPersonne NUMBER REFERENCES Personne,
+  3  	     idEntreprise NUMBER REFERENCES Entreprise,
+  4  	     statutEmploye VARCHAR2(255),
+  5  	     PRIMARY KEY (idPersonne, idEntreprise)
+  6  );
+
+Table created.
+
+SQL> 
+SQL> /**
+SQL>  * La table prioritaire.
+SQL>  * Permet d'enregistrer les personnes dont le statut de surveillance est prioritaire.
+SQL>  * Reference à la table personne.
+SQL>  */
+SQL> CREATE TABLE Prioritaire (
+  2  	     idPersonne NUMBER REFERENCES Personne,
+  3  	     statutPrioritaire VARCHAR2(255),
+  4  	     PRIMARY KEY(idPersonne, statutPrioritaire)
+  5  );
+
+Table created.
+
+SQL> 
+SQL> /**
+SQL>  * La table prioritaire.
+SQL>  * Permet d'enregistrer les relations entre deux personnes.
+SQL>  * Reference à la table personne.
+SQL>  */
+SQL> CREATE TABLE Relation (
+  2  	     emetteur NUMBER,
+  3  	     recepteur NUMBER,
+  4  	     typeRelation VARCHAR2(255),
+  5  	     contexteRelation VARCHAR2(255),
+  6  	     PRIMARY KEY (emetteur, recepteur),
+  7  	     --CONSTRAINT typeRelation CHECK (typeRelation IN ('Connaissance', 'Amitie', 'Mariage', 'Divorce', 'Adultere', 'Ennemi')),
+  8  	     --CONSTRAINT contexteRelation CHECK (contexteRelation IN ('Travail', 'Famille', 'Etude', 'Internet', 'Logement')),
+  9  	     FOREIGN KEY (emetteur) REFERENCES Personne(idPersonne),
+ 10  	     FOREIGN KEY (recepteur) REFERENCES Personne(idPersonne)
+ 11  );
+
+Table created.
+
+SQL> 
+SQL> /**
+SQL>  * La table des mails.
+SQL>  * Permet d'enregistrer les adresses mails de chaque personne.
+SQL>  * Reference à la table personne.
+SQL>  */
+SQL> CREATE TABLE Mail (
+  2  	     adresseMail VARCHAR2(255) PRIMARY KEY,
+  3  	     mdpMail VARCHAR2(255),
+  4  	     proprietaireMail NUMBER,
+  5  	     fournisseurMail VARCHAR2(255),
+  6  	     CONSTRAINT fournisseurMail CHECK (fournisseurMail IN ('Free', 'Orange', 'Laposte')),
+  7  	     FOREIGN KEY (proprietaireMail) REFERENCES Personne(idPersonne)
+  8  );
+
+Table created.
+
+SQL> 
+SQL> 
+SQL> /**
+SQL>  * La table Telephone.
+SQL>  * Permet d'enregistrer les numeros de telephone de chaque personne.
+SQL>  * Reference à la table personne.
+SQL>  */
+SQL> CREATE TABLE Telephone (
+  2  	     numTelephone VARCHAR2(255) PRIMARY KEY,
+  3  	     codePin NUMBER,
+  4  	     proprietaireTelephone NUMBER,
+  5  	     fournisseurTelephone VARCHAR2(255),
+  6  	     CONSTRAINT fournisseurTelephone CHECK (fournisseurTelephone IN ('SFR', 'Free', 'Orange', 'Bouygues', 'Numericable')),
+  7  	     FOREIGN KEY (proprietaireTelephone) REFERENCES Personne(idPersonne)
+  8  );
+
+Table created.
+
+SQL> 
+SQL> 
+SQL> /**
+SQL>  * La table comptebancaire.
+SQL>  * Permet d'enregistrer les comptes banquaires de chaque personne.
+SQL>  * Reference à la table personne.
+SQL>  */
+SQL> CREATE TABLE CompteBancaire (
+  2  	     iban VARCHAR2(255) PRIMARY KEY,
+  3  	     solde NUMBER,
+  4  	     codeBancaire NUMBER,
+  5  	     proprietaireCompteBancaire NUMBER,
+  6  	     FOREIGN KEY (proprietaireCompteBancaire) REFERENCES Personne(idPersonne)
+  7  );
+
+Table created.
+
+SQL> 
+SQL> /**
+SQL>  * La table conversation.
+SQL>  * Permet d'enregistrer les conversations entre deux personnes.
+SQL>  * Reference à la table personne.
+SQL>  */
+SQL> CREATE TABLE Conversation (
+  2  	     idConv NUMBER PRIMARY KEY,
+  3  	     dateHeureConv DATE,
+  4  	     typeConv VARCHAR2(255),
+  5  	     contenuConv VARCHAR2(1500),
+  6  	     allocuteur1 NUMBER,
+  7  	     allocuteur2 NUMBER,
+  8  	     FOREIGN KEY (allocuteur1) REFERENCES Personne(idPersonne),
+  9  	     FOREIGN KEY (allocuteur2) REFERENCES Personne(idPersonne)
+ 10  );
+
+Table created.
+
+SQL> @view.sql
+SQL> /**
+SQL>   * Vue pour la fbi
+SQL>   * Permet de trouver les terroristes
+SQL>   */
+SQL> CREATE VIEW fbi_view AS
+  2  	     SELECT *
+  3  	     FROM  Personne Natural Join Prioritaire
+  4  	     Where Prioritaire.statutPrioritaire='Terroriste';
+
+View created.
+
+SQL> 
+SQL> /**
+SQL>   * Hackers are in your home
+SQL>   */
+SQL> CREATE VIEW i_hack_you_view AS
+  2  	     SELECT Personne.nom, Personne.prenom
+  3  	     FROM (Personne Natural Join Employe) Natural Join Entreprise
+  4  	     Where Entreprise.nomEntreprise = 'NSA';
+
+View created.
+
+SQL> 
+SQL> 
+SQL> /** Vue Mail **/
+SQL> 
+SQL> CREATE VIEW mail_free_view AS SELECT adresseMail, mdpMail, proprietaireMail FROM Mail WHERE fournisseurMail = 'Free';
+
+View created.
+
+SQL> 
+SQL> CREATE VIEW mail_orange_view AS SELECT adresseMail, mdpMail, proprietaireMail FROM Mail WHERE fournisseurMail = 'Orange';
+
+View created.
+
+SQL> 
+SQL> CREATE VIEW mail_laposte_view AS SELECT adresseMail, mdpMail, proprietaireMail FROM Mail WHERE fournisseurMail = 'Laposte';
+
+View created.
+
+SQL> 
+SQL> 
+SQL> /** Vue Telephone **/
+SQL> 
+SQL> CREATE VIEW telephone_sfr_view AS SELECT numTelephone, codePin, proprietaireTelephone FROM Telephone WHERE fournisseurTelephone = 'SFR';
+
+View created.
+
+SQL> 
+SQL> CREATE VIEW telephone_free_view AS SELECT numTelephone, codePin, proprietaireTelephone FROM Telephone WHERE fournisseurTelephone = 'Free';
+
+View created.
+
+SQL> 
+SQL> CREATE VIEW telephone_orange_view AS SELECT numTelephone, codePin, proprietaireTelephone FROM Telephone WHERE fournisseurTelephone = 'Orange';
+
+View created.
+
+SQL> 
+SQL> CREATE VIEW telephone_bouygues_view AS SELECT numTelephone, codePin, proprietaireTelephone FROM Telephone WHERE fournisseurTelephone = 'Bouygues';
+
+View created.
+
+SQL> 
+SQL> CREATE VIEW telephone_numericable_view AS SELECT numTelephone, codePin, proprietaireTelephone FROM Telephone WHERE fournisseurTelephone = 'Numericable';
+
+View created.
+
+SQL> @trigger.sql
+SQL> SET SERVEROUTPUT ON;
+SQL> 
+SQL> /* Easter egg */
+SQL> CREATE OR REPLACE TRIGGER cookie
+  2  AFTER INSERT OR UPDATE ON Personne
+  3  FOR EACH ROW
+  4  BEGIN
+  5  	     IF :new.nom = 'Cookie' THEN
+  6  		     DBMS_OUTPUT.put_line('[INFO] Cooooookie !!!');
+  7  	     END IF;
+  8  END;
+  9  /
+
+Trigger created.
+
+SQL> 
+SQL> /* Envoie un mail lorsqu'un nouveau terroriste est détecté */
+SQL> CREATE OR REPLACE TRIGGER terroriste
+  2  AFTER INSERT OR UPDATE ON Prioritaire
+  3  FOR EACH ROW
+  4  BEGIN
+  5  	     IF :new.statutPrioritaire = 'Terroriste' THEN
+  6  		     DBMS_OUTPUT.put_line('Sending email...');
+  7  	     END IF;
+  8  END;
+  9  /
+
+Trigger created.
+
+SQL> 
+SQL> 
+SQL> 
+SQL> /** Trigger Mail **/
+SQL> 
+SQL> CREATE TRIGGER mail_free_ajout
+  2  INSTEAD OF insert ON mail_free_view
+  3  FOR EACH ROW
+  4  BEGIN
+  5  	     INSERT INTO Mail VALUES (:new.adresseMail, :new.mdpMail, :new.proprietaireMail, 'Free');
+  6  END;
+  7  /
+
+Trigger created.
+
+SQL> 
+SQL> CREATE TRIGGER mail_orange_ajout
+  2  INSTEAD OF insert ON mail_orange_view
+  3  FOR EACH ROW
+  4  BEGIN
+  5  	     INSERT INTO Mail VALUES (:new.adresseMail, :new.mdpMail, :new.proprietaireMail, 'Orange');
+  6  END;
+  7  /
+
+Trigger created.
+
+SQL> 
+SQL> CREATE TRIGGER mail_laposte_ajout
+  2  INSTEAD OF insert ON mail_laposte_view
+  3  FOR EACH ROW
+  4  BEGIN
+  5  	     INSERT INTO Mail VALUES (:new.adresseMail, :new.mdpMail, :new.proprietaireMail, 'Laposte');
+  6  END;
+  7  /
+
+Trigger created.
+
+SQL> 
+SQL> 
+SQL> /** Trigger Telephone **/
+SQL> 
+SQL> CREATE TRIGGER telephone_sfr_ajout
+  2  INSTEAD OF insert ON telephone_sfr_view
+  3  FOR EACH ROW
+  4  BEGIN
+  5  	     INSERT INTO Telephone VALUES (:new.numTelephone, :new.codePin, :new.proprietaireTelephone, 'SFR');
+  6  END;
+  7  /
+
+Trigger created.
+
+SQL> 
+SQL> CREATE TRIGGER telephone_free_ajout
+  2  INSTEAD OF insert ON telephone_free_view
+  3  FOR EACH ROW
+  4  BEGIN
+  5  	     INSERT INTO Telephone VALUES (:new.numTelephone, :new.codePin, :new.proprietaireTelephone, 'Free');
+  6  END;
+  7  /
+
+Trigger created.
+
+SQL> 
+SQL> CREATE TRIGGER telephone_orange_ajout
+  2  INSTEAD OF insert ON telephone_orange_view
+  3  FOR EACH ROW
+  4  BEGIN
+  5  	     INSERT INTO Telephone VALUES (:new.numTelephone, :new.codePin, :new.proprietaireTelephone, 'Orange');
+  6  END;
+  7  /
+
+Trigger created.
+
+SQL> 
+SQL> CREATE TRIGGER telephone_bouygues_ajout
+  2  INSTEAD OF insert ON telephone_bouygues_view
+  3  FOR EACH ROW
+  4  BEGIN
+  5  	     INSERT INTO Telephone VALUES (:new.numTelephone, :new.codePin, :new.proprietaireTelephone, 'Bouygues');
+  6  END;
+  7  /
+
+Trigger created.
+
+SQL> 
+SQL> CREATE TRIGGER telephone_numericable_ajout
+  2  INSTEAD OF insert ON telephone_numericable_view
+  3  FOR EACH ROW
+  4  BEGIN
+  5  	     INSERT INTO Telephone VALUES (:new.numTelephone, :new.codePin, :new.proprietaireTelephone, 'Numericable');
+  6  END;
+  7  /
+
+Trigger created.
+
+SQL> @fonction.sql
+SQL> /** Fonction update vente de sfr à numéricable **/
+SQL> 
+SQL> CREATE PROCEDURE update_vente_sfr
+  2  IS
+  3  BEGIN
+  4  	     UPDATE Telephone SET fournisseurTelephone = 'Numericable' WHERE fournisseurTelephone = 'SFR';
+  5  END;
+  6  /
+
+Procedure created.
+
+SQL> 
+SQL> CREATE PROCEDURE entourage_bis (id number, id2 number, n number, diff number)
+  2  IS
+  3  	     Cursor C1 IS SELECT * FROM Personne JOIN Relation ON emetteur = idPersonne WHERE emetteur != id2 and recepteur = id;
+  4  	     i C1%rowtype;
+  5  BEGIN
+  6  	     IF(n > 0) THEN
+  7  		     FOR i in C1 LOOP
+  8  			     DBMS_OUTPUT.put_line(i.nom || ' ' || i.prenom || ' : ' || diff || ' degre d eloignement');
+  9  			     entourage_bis(i.idPersonne, id2, n-1, diff+1);
+ 10  		     END LOOP;
+ 11  	     END IF;
+ 12  END;
+ 13  /
+
+Procedure created.
+
+SQL> 
+SQL> CREATE PROCEDURE entourage (id number, n number)
+  2  IS
+  3  BEGIN
+  4  	     entourage_bis(id, id, n, 1);
+  5  END;
+  6  /
+
+Procedure created.
+
+SQL> @role.sql
+SQL> /**
+SQL>   * Role pour la NSA
+SQL>   * Role attribue aux membres de la NSA
+SQL>   *
+SQL>   **/
+SQL> CREATE ROLE NSA;
+
+Role created.
+
+SQL> 
+SQL> GRANT all on Personne to NSA;
+
+Grant succeeded.
+
+SQL> GRANT all on ENTREPRISE to NSA;
+
+Grant succeeded.
+
+SQL> GRANT all on EMPLOYE to NSA;
+
+Grant succeeded.
+
+SQL> GRANT all on PRIORITAIRE to NSA;
+
+Grant succeeded.
+
+SQL> GRANT all on RELATION to NSA;
+
+Grant succeeded.
+
+SQL> GRANT all on MAIL to NSA;
+
+Grant succeeded.
+
+SQL> GRANT all on COMPTEBANCAIRE to NSA;
+
+Grant succeeded.
+
+SQL> GRANT all on CONVERSATION to NSA;
+
+Grant succeeded.
+
+SQL> GRANT all on TELEPHONE to NSA;
+
+Grant succeeded.
+
+SQL> 
+SQL> GRANT NSA to L3_19;
+
+Grant succeeded.
+
+SQL> --GRANT NSA to L3_18;
+SQL> 
+SQL> 
+SQL> /**
+SQL>   * Role pour la police
+SQL>   * Possibilite de regarder uniquement sur une vue
+SQL>   **/
+SQL> CREATE ROLE FBI;
+
+Role created.
+
+SQL> GRANT select on fbi_view to FBI;
+
+Grant succeeded.
+
+SQL> 
+SQL> 
+SQL> /**
+SQL>  * Role pour les fournisseurs d'accès internet nos partenaires
+SQL>  * Acces complet à la vue correspondante.
+SQL>  * Free acces a mail_free_view et telephone_free_view
+SQL>  * Orange acces a mail_orange_view et telephone_orange_view
+SQL>  * Laposte acces a mail
+SQL>  * SFR acces a telephone
+SQL>  * Bouygues acces a telephone
+SQL>  * Numericable telephone
+SQL>  */
+SQL> 
+SQL> CREATE ROLE FREE;
+
+Role created.
+
+SQL> GRANT all on mail_free_view to FREE;
+
+Grant succeeded.
+
+SQL> GRANT all on telephone_free_view to FREE;
+
+Grant succeeded.
+
+SQL> 
+SQL> CREATE ROLE ORANGE;
+
+Role created.
+
+SQL> GRANT all on mail_orange_view to ORANGE;
+
+Grant succeeded.
+
+SQL> GRANT all on telephone_orange_view to ORANGE;
+
+Grant succeeded.
+
+SQL> 
+SQL> CREATE ROLE LAPOSTE;
+
+Role created.
+
+SQL> GRANT all on mail_laposte_view to LAPOSTE;
+
+Grant succeeded.
+
+SQL> 
+SQL> CREATE ROLE SFR;
+
+Role created.
+
+SQL> GRANT all on telephone_sfr_view to SFR;
+
+Grant succeeded.
+
+SQL> 
+SQL> CREATE ROLE BOUYGUES;
+
+Role created.
+
+SQL> GRANT all on telephone_bouygues_view to BOUYGUES;
+
+Grant succeeded.
+
+SQL> 
+SQL> CREATE ROLE NUMERICABLE;
+
+Role created.
+
+SQL> GRANT all on telephone_numericable_view to NUMERICABLE;
+
+Grant succeeded.
+
+SQL> 
+SQL> 
+SQL> @insert.sql
+SQL> /* Personne */
+SQL> INSERT INTO Personne VALUES (0, 'Marley', 'Bob', 'Homme', '18-APR-1978', '12 rue des marguerites', 'Joli cheveux');
+
+1 row created.
+
+SQL> INSERT INTO Personne VALUES (1, 'Little', 'Jamina', 'Femme', '21-JAN-1998', '12 rue des marguerites', 'Grande');
+
+1 row created.
+
+SQL> INSERT INTO Personne VALUES (2, 'Martin', 'Martin', 'Homme', '1-JUL-1956', '4 avenue Paul Roublard', 'Jeune et grand');
+
+1 row created.
+
+SQL> INSERT INTO Personne VALUES (3, 'Jospin', 'Paul', 'Homme', '9-DEC-1992', '6 rue des paillettes', 'Petite personne');
+
+1 row created.
+
+SQL> 
+SQL> /* Prioritaire */
+SQL> INSERT INTO Personne VALUES (4, 'Alexander', 'Keith', 'Homme', '2-DEC-1951', '33 Federal Street New York', 'A des lunettes');
+
+1 row created.
+
+SQL> INSERT INTO Entreprise VALUES (0, 'NSA', 'Organisation gouvernementale');
+
+1 row created.
+
+SQL> INSERT INTO Employe VALUES (4, 0, 'Directeur');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Personne VALUES (5, 'Merkel', 'Angela', 'Femme', '17-JUL-1954', '27 rue Meldermann' , '');
+
+1 row created.
+
+SQL> INSERT INTO Prioritaire VALUES (5, 'Chancelier Federal Allemand');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Personne VALUES (6, 'Dupond', 'Mohamed', 'Homme', '23-NOV-1985', '76 rue des ananas', 'Louche');
+
+1 row created.
+
+SQL> INSERT INTO Prioritaire VALUES (6, 'Terroriste');
+Sending email...                                                                
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Entreprise VALUES (1, 'ColoriFleur', '?');
+
+1 row created.
+
+SQL> INSERT INTO Employe VALUES (0, 1, 'Chef d equipe');
+
+1 row created.
+
+SQL> INSERT INTO Employe VALUES(6, 1, 'Livreur');
+
+1 row created.
+
+SQL> 
+SQL> /* Relation */
+SQL> INSERT INTO Relation VALUES (0, 6, 'Amitie', 'Travail');
+
+1 row created.
+
+SQL> INSERT INTO Relation VALUES (6, 0, 'Indifference', 'Travail');
+
+1 row created.
+
+SQL> INSERT INTO Relation VALUES (0, 3, 'Fils', 'Famille');
+
+1 row created.
+
+SQL> INSERT INTO Relation VALUES (3, 0, 'Pere', 'Famille');
+
+1 row created.
+
+SQL> INSERT INTO Relation VALUES (6, 2, 'Amitie', 'Internet');
+
+1 row created.
+
+SQL> INSERT INTO Relation VALUES (2, 6, 'Amitie', 'Internet');
+
+1 row created.
+
+SQL> 
+SQL> /* Mail */
+SQL> INSERT INTO Mail VALUES ('b.marley@laposte.net', '1841978', 0, 'Laposte');
+
+1 row created.
+
+SQL> INSERT INTO Mail VALUES ('bomberman@free.fr', 'alquaida', 6, 'Free');
+
+1 row created.
+
+SQL> 
+SQL> /* Telephone */
+SQL> INSERT INTO Telephone VALUES ('0658764323', '3945', 5, 'SFR');
+
+1 row created.
+
+SQL> INSERT INTO telephone_orange_view VALUES ('0634216589', '0000', 2);
+
+1 row created.
+
+SQL> 
+SQL> /* Compte Bancaire */
+SQL> INSERT INTO CompteBancaire VALUES ('FR7630046001290029721519546', '50000', '4598', 3);
+
+1 row created.
+
+SQL> INSERT INTO CompteBancaire VALUES ('AL7640046001290029721519546', '16250000', '9999', 5);
+
+1 row created.
+
+SQL> 
+SQL> /* Conversation */
+SQL> INSERT INTO Conversation VALUES ( 0, '23-NOV-1985' , 'Appel secret', 'Hello cheri on se voit à la sortie', 0,1);
+
+1 row created.
+
+SQL> INSERT INTO Conversation VALUES ( 1, '20-APR-2001' , 'SMS', 'Avion en vue des tours', 6,4);
+
+1 row created.
+
+SQL> 
+SQL> 
+SQL> 
+SQL> spool off

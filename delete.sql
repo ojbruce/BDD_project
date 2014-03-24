@@ -1,3 +1,13 @@
+/**
+ * Projet BDD
+ * Base de donnée de la NSA
+ *
+ * @author : Olivia Bruce
+ * @author : Matthieu Riou
+ * @author : Brice Thomas
+ */
+
+
 /* Suppression des Trigger */
 DROP TRIGGER cookie;
 DROP TRIGGER terroriste;

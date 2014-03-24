@@ -1,3 +1,12 @@
+/**
+ * Projet BDD
+ * Base de donnée de la NSA
+ *
+ * @author : Olivia Bruce
+ * @author : Matthieu Riou
+ * @author : Brice Thomas
+ */
+
 /** 
   * Role pour la NSA
   * Role attribue aux membres de la NSA

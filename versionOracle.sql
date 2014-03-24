@@ -1,4 +1,13 @@
 /**
+ * Projet BDD
+ * Base de donnée de la NSA
+ *
+ * @author : Olivia Bruce
+ * @author : Matthieu Riou
+ * @author : Brice Thomas
+ */
+
+/**
  * La table personne.
  * Permet d'enregistrer des personnes.
  */

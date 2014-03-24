@@ -1,4 +1,13 @@
 /**
+ * Projet BDD
+ * Base de donnée de la NSA
+ *
+ * @author : Olivia Bruce
+ * @author : Matthieu Riou
+ * @author : Brice Thomas
+ */
+
+/**
   * Vue pour la fbi
   * Permet de trouver les terroristes
   */
