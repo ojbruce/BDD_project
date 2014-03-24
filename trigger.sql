@@ -1,7 +1,6 @@
---EXEC dbms_output.enable(1000000); /* <-- marche pas top top */
 SET SERVEROUTPUT ON;
 
-/* Pretty pretty useless */
+/* Easter egg */
 CREATE OR REPLACE TRIGGER cookie
 AFTER INSERT OR UPDATE ON Personne
 FOR EACH ROW

@@ -35,6 +35,8 @@ DROP ROLE NUMERICABLE;
 
 /* Suppression des Procedure */
 DROP PROCEDURE update_vente_sfr;
+DROP PROCEDURE entourage_bis;
+DROP PROCEDURE entourage;
 
 /* Suppression des tables de notre base de données */
 DROP TABLE Employe;
