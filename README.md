@@ -23,6 +23,9 @@ Push:
 
 ```$ git push -v https://github.com/ojbruce/BDD_project.git``` 
 
+Pull :
+```$ git pull -v git://localhost/ojbruce/BDD_project.git```
+
 Deco bastion
 
 ```$kill -9 <processus ssh>```
